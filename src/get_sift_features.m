@@ -7,9 +7,13 @@ max_pixels = 16000 ;
 step = 6 ;
 bin_size = 4 ;
 
-im_raw = rgb2gray(imread('1.jpg')) ;
+im_raw = rgb2gray(imread(im_path)) ;
 [M, N] = size(im_raw) ;
+fprintf('image original size : [%d, %d]\n', M, N) ;
+
 im_raw_resized = imresize(im_raw, sqrt(max_pixels / (M*N)) ) ;
+[M, N] = size(im_raw_resized) ;
+fprintf('image resized size : [%d, %d]\n', M, N) ;
 
 im = single(im_raw_resized) ;
 
