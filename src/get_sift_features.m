@@ -20,8 +20,8 @@ im = single(im_raw_resized) ;
 % vl_dsift() does NOT compute a Gaussian scale space of the image I. 
 % Instead, the image should be pre-smoothed at the desired scale level, e.b. by using the vl_imsmooth() function. 
 
-[f, d] = vl_dsift(im, 'size', bin_size, 'step', step, 'verbose') ;
-% [f, d] = vl_dsift(im, 'size', bin_size, 'step', step) ;
+% [f, d] = vl_dsift(im, 'size', bin_size, 'step', step, 'verbose') ;
+[f, d] = vl_dsift(im, 'size', bin_size, 'step', step) ;
 
 fprintf('total number of features : %d\n', size(d, 2)) ;
 
