@@ -1,4 +1,4 @@
-function [V, E] = eigen_spectram(A)
+function [V, E] = graph_eigen_spectram(A)
 % this function computes laplacian of A and then eigen spectram of laplacian
 
 %{

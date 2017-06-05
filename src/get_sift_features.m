@@ -1,11 +1,13 @@
-function [f, d, M, N] = get_sift_features(im_path)
+function [f, d, M, N] = get_sift_features(im_path, max_pixels, step, bin_size)
 % Resize image so that total number of feature points doesn't exceed much.
 % There will be almost `max_pixels/(step*step)` feature points for small bin_size.
 % Extract image SIFT features using vlfeat.
 
-max_pixels = 16000 ;
-step = 4 ;
-bin_size = 4 ;
+%{
+max_pixels = 48000 ;
+step = 6 ;
+bin_size = 6 ;
+%}
 
 im_raw = rgb2gray(imread(im_path)) ;
 [M, N] = size(im_raw) ;
