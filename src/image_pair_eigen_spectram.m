@@ -16,7 +16,7 @@ nf = nf1 + nf2 ;
 
 % joint graph spectram
 A = adjacency_mat(d1, d2) ;
-[V, E] = graph_eigen_spectram(A) ;
+[V, E] = graph_eigen_spectram(A, num) ;
 
 I1 = {} ;
 I2 = {} ;
