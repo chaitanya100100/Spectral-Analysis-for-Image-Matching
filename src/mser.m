@@ -1,4 +1,4 @@
-function [r, f] = mser(I, MinDiversity, MaxVariation, Delta)
+function [r, f, I] = mser(I, MinDiversity, MaxVariation, Delta)
 
 mi = min(I(:)) ;
 ma = max(I(:)) ;

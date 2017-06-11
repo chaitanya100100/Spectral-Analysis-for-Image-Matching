@@ -1,4 +1,4 @@
-function [f, d, M, N] = get_sift_features(im_path, max_pixels, step, bin_size)
+function [f, d, M, N] = get_sift_features2(im_path, max_pixels, step, bin_size)
 % Resize image so that total number of feature points doesn't exceed much.
 % There will be almost `max_pixels/(step*step)` feature points for small bin_size.
 % Extract image SIFT features using vlfeat.
@@ -8,8 +8,6 @@ max_pixels = 48000 ;
 step = 6 ;
 bin_size = 6 ;
 %}
-
-bin_size = bin_size(1) ;
 
 im_raw = rgb2gray(imread(im_path)) ;
 [M, N] = size(im_raw) ;
@@ -21,12 +19,18 @@ fprintf('image resized size : [%d, %d]\n', M, N) ;
 
 im = single(im_raw_resized) ;
 
-% vl_dsift() does NOT compute a Gaussian scale space of the image I. 
-% Instead, the image should be pre-smoothed at the desired scale level, e.b. by using the vl_imsmooth() function. 
+% frames to compute sift features
+[p, q] = meshgrid(1:step:N, 1:step:M) ;
+f = [p(:) q(:)]' ;
+f(3, :) = 2 ;
+f(4, :) = 0 ;
 
-[f, d] = vl_dsift(im, 'size', bin_size, 'step', step, 'verbose') ;
-% [f1, d1] = vl_dsift(im, 'size', bin_size(1), 'step', step) ;
-% [f2, d2] = vl_dsift(im, 'size', bin_size(2), 'step', step) ;
+% sift at two bin_sizes
+[f, d1] = vl_sift(im, 'frames', f, 'WindowSize', bin_size(1), 'verbose') ;
+[f, d2] = vl_sift(im, 'frames', f, 'WindowSize', bin_size(2), 'verbose') ;
+
+f = f(1:2, :) ;
+d = vertcat(d1, d2) ;
 
 fprintf('total number of features : %d\n', size(d, 2)) ;
 

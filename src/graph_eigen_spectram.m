@@ -18,8 +18,8 @@ D = diag(1./sqrt(D)) ;
 L = eye(size(D, 1)) - D*A*D ;
 
 % eigen decomposition of laplacian
-%[V, E] = eigs(L, num+1, 'sm') ;
-[V, E] = eig(L) ;
+[V, E] = eigs(L, num, 'sm') ;
+%[V, E] = eig(L) ;
 V = D*V ;
 
 end
