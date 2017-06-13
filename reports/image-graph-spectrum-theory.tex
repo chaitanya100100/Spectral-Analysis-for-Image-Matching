@@ -1,0 +1,227 @@
+\documentclass{beamer}
+%
+% Choose how your presentation looks.
+%
+% For more themes, color themes and font themes, see:
+% http://deic.uab.es/~iblanes/beamer_gallery/index_by_theme.html
+%
+\mode<presentation>
+{
+  \usetheme{default}      % or try Darmstadt, Madrid, Warsaw, ...
+  \usecolortheme{default} % or try albatross, beaver, crane, ...
+  \usefonttheme{default}  % or try serif, structurebold, ...
+  \setbeamertemplate{navigation symbols}{}
+  \setbeamertemplate{caption}[numbered]
+} 
+
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+
+\title[Image Graph Spectrum]{Image Graph Spectrum}
+\author{Chaitanya Patel}
+\institute{CVIT, IIIT-Hyderabad}
+\date{June, 2017}
+
+\begin{document}
+
+%-------------------------
+% Title Page
+%-------------------------
+\begin{frame}
+  \titlepage
+\end{frame}
+
+%-------------------------
+% Index
+%-------------------------
+\begin{frame}{Outline}
+  \tableofcontents
+\end{frame}
+
+
+%-------------------------
+% Introduction Section
+%-------------------------
+\section{Introduction to Image Graph}
+
+\begin{frame}{Introduction to Image Graph}
+
+\begin{itemize}
+  \item For image segmentation, clustering, etc. \texttt{Graph Spectral Analysis} has been extensively used.
+  \item Image is represented as a weighted complete graph. Each pixel represents a vertex.
+  \item Edge weights are assigned as per affinity between pixels. Affinity can be defined on the basis of various properties :
+  \begin{itemize}
+  	\item Intensity difference between two vertices
+    \item Gradient difference between two vertices
+    \item Difference between some other feature calculated at each pixel e.g. sift
+  \end{itemize}
+
+\end{itemize}
+
+%\begin{block}{Examples}
+%Some examples of commonly used commands and features are %included, to help you get started.
+%\end{block}
+
+\end{frame}
+
+
+
+%-------------------------
+% Image Graph Section
+%-------------------------
+\section{Image Graph}
+
+\subsection{Definition of Image Graph}
+\begin{frame}{Image Graph}
+
+\begin{itemize}
+	\item Image Graph is represented as $G(V, E, W)$
+    \item $V$ contains all image pixels as vertices. If there are total $n$ pixels in the image then $|V| = n$
+    \item $E$ contains all pairwise relationship between every pair of vertices(pixels) thus making $G$ a complete graph. $|E| = \binom{n}{2}$ for undirected graph
+    \item The weight $w_{ij} ≥ 0$ associated with an edge $(v_i , v_j ) \in E$ encodes the affinity between the pixels represented by vertices $v_i$ and $v_j$. We can collect these weights into an $n \times n$ affinity matrix $W = (w_{ij})_{i,j=1,\ldots,n}$
+    
+\end{itemize}
+
+\end{frame}
+
+
+\subsection{Function p}
+\begin{frame}{Function p}
+
+\begin{itemize}
+
+	\item We want to define a function $p : V \rightarrow \mathbb{R}$ such that it is a continuous function i.e. difference between $p(v_i)$ and $p(v_j)$ inversely follows $w_{ij}$
+    \item It is equivalent to say that we want to minimize $$ \lambda = \sum_{i=1}^{n} \sum_{j=1}^{n} w_{ij}(p(v_i) - p(v_j))^2 $$
+    \item Let Matrix P be defined as 
+    	$\begin{bmatrix}
+        	p(v_1)\\
+            p(v_2)\\
+            \vdots \\
+            p(v_{|V|})
+		\end{bmatrix}$
+\end{itemize}
+
+\end{frame}
+
+
+
+%-------------------------
+% Laplacian Section
+%-------------------------
+\section{Laplacian}
+
+\subsection{Incident Matrix}
+\begin{frame}{Incident Matrix}
+
+\begin{itemize}
+
+	\item For any directed graph $G(V, E)$, consider $$V = \{v_1, v_2, \ldots\, v_{|V|}\}$$  $$E = \{e_1, e_2, \ldots, e_{|E|}\}$$ 
+    \item Incident Matrix $\nabla$ is $|E| \times |V|$ matrix such that if $k^{th}$ edge is from $v_i$ to $v_j$ with weight $w_{ij}$ then
+    \begin{itemize}
+    	\item $\nabla_{ki} = +w_{ij}$ 
+        \item $\nabla_{kj} = -w_{ij}$
+        \item $\nabla_{km} = 0, \forall m \neq i, j$
+	\end{itemize}
+\end{itemize}
+
+\end{frame}
+
+
+\subsection{Laplacian Matrix}
+\begin{frame}{Laplacian Matrix}
+
+\begin{itemize}
+	\item $L$ = $\nabla^T\nabla$ is called laplacian of graph
+    \item $L$ is $|V| \times |V|$ matrix where 
+      $$ L_{ii} = \sum_{j=1}^{|V|} w_{ij} $$
+      $$ \underset{i \neq j} {L_{ij}} = -w_{ij} $$
+    \item $L = D - W$ where $D$ is degree matrix and $W$ is adjacency matrix
+\end{itemize}
+
+\end{frame}
+
+
+%-------------------------
+% Obtaining optimum p Section
+%-------------------------
+\section{Obtaining optimum p}
+
+\subsection{Laplacian's relation to function p}
+\begin{frame}{Laplacian's relation to function p}
+
+\begin{itemize}
+
+	\item We can show that $P^TLP = \frac{\lambda}{2}$
+  	\begin{align*}
+  	P^TLP &= P^T(D - W)P \\ 
+          &= P^TDP - P^TWP
+  	\end{align*}
+	\item Take $d_{ii}$ $=$ ($i^{th}$ diagonal entry in $D$) and $p_i$ $=$ $p(v_i)$
+	\item First term is
+    	\begin{align*}
+        	P^TDP &= \sum_{i=1}^{|V|}d_{ii} p_{i}^2
+        \end{align*}
+	\item second term is
+    	\begin{align*}
+        	P^TWP &= \sum_{i=1}^{|V|} \sum_{j=1}^{|V|} p_{i} p_{j} w_{ij}
+    	\end{align*}
+        
+\end{itemize}
+
+\end{frame}
+
+
+
+\begin{frame}{Laplacian's relation to function p (cont.)}
+
+  \begin{align*}
+  	P^TLP &= \sum_{i=1}^{|V|}d_{ii} p_{i}^2 - \sum_{i=1}^{|V|} \sum_{j=1}^{|V|} p_{i} p_{j} w_{ij} \\
+          &= \sum_{i=1}^{|V|} \sum_{j=1}^{|V|} w_{ij} p_{i}^2 - \sum_{i=1}^{|V|} \sum_{j=1}^{|V|} p_{i} p_{j} w_{ij} \\
+          &= \frac{1}{2} ( \sum_{i=1}^{|V|} \sum_{j=1}^{|V|} w_{ij} p_{i}^2 + \sum_{i=1}^{|V|} \sum_{j=1}^{|V|} w_{ij} p_{j}^2 - 2\sum_{i=1}^{|V|} \sum_{j=1}^{|V|} p_{i} p_{j} w_{ij} ) \\
+          &= \frac{1}{2} \sum_{i=1}^{|V|} \sum_{j=1}^{|V|} w_{ij} (p_i - p_j)^2 \\
+          &= \frac{\lambda}{2}
+  \end{align*}
+
+\end{frame}
+
+
+\subsection{eigenvectors of L as p}
+
+\begin{frame}{Courant-Fischer Formula}
+
+\begin{itemize}
+	\item Courant-Fischer Formula for any $n \times n$ symmetric matrix $A$
+    \begin{align*}
+    	\lambda_1 &= {\min}_{\substack{||x|| = 1}} ( x^TAx ) \\
+        \lambda_2 &= {\min}_{\substack{||x|| = 1 \\ x \perp v_1}} ( x^TAx ) \\
+         & \vdots \\
+        \lambda_{max} &= {\max}_{\substack{||x|| = 1}} ( x^TAx ) \\
+    \end{align*} Here $v_1, v_2, v_3, \cdots$ are eigenvectors corresponding to eigenvalues $\lambda_1, \lambda_2, \lambda_3, \cdots$ where $\lambda_1 \leq \lambda_2 \leq \lambda_3 \cdots$
+    
+    \item We know $P^TLP = \frac{\lambda}{2}$ and $L$ is symmetric. Thus eigenvectors of $L$ corresponding to smallest eigenvalues, represent such possible $P$'s that minimizes $\lambda$
+
+\end{itemize}
+
+\end{frame}
+
+
+%-------------------------
+% Conclusion section
+%-------------------------
+\section{Conclusion}
+
+\begin{frame}{Conclusion}
+
+\begin{itemize}
+	
+    \item For any image, a weighted graph is constructed considering each pixel a vertex.
+    \item Edge weights are assigned according to affinity of vertices.
+    \item Laplacian is obtained from adjacency matrix using formula $L = D - W$
+    \item Normalized laplacian can be obtained by formula $L = I - D^{-\frac{1}{2}}WD^{-\frac{1}{2}}$
+    \item Eigen Decomposition of $L$ gives $v_1$ as a trivial solution and $v_2, v_3, \cdots$ as desired solutions
+    
+\end{itemize}
+
+\end{frame}
+
+\end{document}

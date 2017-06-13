@@ -4,10 +4,10 @@ clear all ;
 path1 = '../dataset/01.png' ;
 path2 = '../dataset/02.png' ;
 
-max_pixels = 48000 ;
+max_pixels = 32000 ;
 step = 5 ;
 bin_size = [6 10] ;
-num = 6 ;
+num = 5 ;
 
 MinDiversity = 0.5 ;
 MaxVariation = 0.3 ;
@@ -16,9 +16,9 @@ Delta = 10 ;
 
 % extract dense sift features from both images
 fprintf('dense sift features for %s\n', path1) ;
-[f1, d1, m1, n1] = get_sift_features2(path1, max_pixels, step, bin_size) ;
+[f1, d1, m1, n1] = get_sift_features(path1, max_pixels, step, bin_size) ;
 fprintf('dense sift features for %s\n', path2) ;
-[f2, d2, m2, n2] = get_sift_features2(path2, max_pixels, step, bin_size) ;
+[f2, d2, m2, n2] = get_sift_features(path2, max_pixels, step, bin_size) ;
 
 % number of feature points of image1 and image2 is nf1 and nf2 respectively
 nf1 = size(d1, 2) ;
@@ -47,10 +47,10 @@ for i = 2 : num
     figure ;
     subplot(1, 2, 1) ;
     imagesc(I1) ;
-    colorbar ;
+    colormap jet ;
     subplot(1, 2, 2) ;
     imagesc(I2) ;
-    colorbar ;
+    colormap jet ;
 end
 %{
 % extract mser features

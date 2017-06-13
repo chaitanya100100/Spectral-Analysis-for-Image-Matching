@@ -1,0 +1,115 @@
+\documentclass{beamer}
+%
+% Choose how your presentation looks.
+%
+% For more themes, color themes and font themes, see:
+% http://deic.uab.es/~iblanes/beamer_gallery/index_by_theme.html
+%
+\mode<presentation>
+{
+  \usetheme{default}      % or try Darmstadt, Madrid, Warsaw, ...
+  \usecolortheme{default} % or try albatross, beaver, crane, ...
+  \usefonttheme{default}  % or try serif, structurebold, ...
+  \setbeamertemplate{navigation symbols}{}
+  \setbeamertemplate{caption}[numbered]
+} 
+
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+
+\title[Joint Spectral Correspondence for Disparate Image Matching]{Joint Spectral Correspondence for Disparate Image Matching \\ . \\ \large Matlab Implementation Details}
+\author{Chaitanya Patel}
+\institute{CVIT, IIIT-Hyderabad}
+\date{June, 2017}
+
+\begin{document}
+
+%-------------------------
+% Title Page
+%-------------------------
+\begin{frame}
+  \titlepage
+\end{frame}
+
+%-------------------------
+% Index
+%-------------------------
+\begin{frame}{Outline}
+  \tableofcontents
+\end{frame}
+
+
+%-------------------------
+% Getting dense sift features
+%-------------------------
+\section{Dense SIFT features}
+\begin{frame}{Dense SIFT features}
+\begin{itemize}
+\item Each image is resized to control total number of pixels
+\item One way is to use \textbf{\texttt{vl\_dsift}} function. It will give 128D feature at each keypoint.      	  \begin{itemize}
+	\item binsize 6 pixels 
+   	\item step(stride size) 4 pixels
+\end{itemize}
+\item According to paper, sift feature is extracted for each key point for two scales i.e. two binsize : 10 and 6 pixels and concatenate them to create 256D feature at each key point
+\item For that, \textbf{\texttt{vl\_sift}} is called twice for each binsize with keypoints specified in frames
+\end{itemize}
+\end{frame}
+
+%-------------------------
+% Adjacency Matrix
+%-------------------------
+\section{Adjacency Matrix}
+\begin{frame}{Adjacency Matrix}
+\begin{itemize}
+
+\item \textbf{\texttt{pdist}} is used to create adjacency matrix for intra image pixels
+\item \textbf{\texttt{pdist2}} is used to create adjacency matrix for inter image pixels
+\item cosine distance is used
+\item They are concatenated to create joint image graph adjacency matrix
+
+\end{itemize}
+\end{frame}
+
+
+%-------------------------
+% Laplacian and its eigen decomposition
+%-------------------------
+\section{Laplacian and its Eigen decomposition}
+\begin{frame}{Laplacian and its eigen decomposition}
+\begin{itemize}
+
+\item Degree Matrix is obtained from Adjacency Matrix
+\item Normalized Laplacian is calculated using formula $L = I - DWD$
+\item \textbf{\texttt{eigs}} is used with parameter \textbf{\texttt{'sm'}} to get 5-6 eigenvectors with smallest eigenvalues
+
+\end{itemize}
+\end{frame}
+
+
+%-------------------------
+% Reconstruction using Eigenvectors
+%-------------------------
+\section{Reconstruction using Eigenvectors}
+\begin{frame}{Reconstruction using Eigenvectors}
+\begin{itemize}
+
+\item Eigenvector is divided into two halves - one for each image
+\item values are put back to each key point and other values are linearly interpolated using \textbf{\texttt{interp2}}
+
+\end{itemize}
+\end{frame}
+
+
+%-------------------------
+% MSER features extraction and matching
+%-------------------------
+\section{MSER features extraction and matching}
+\begin{frame}{MSER features extraction and matching}
+\begin{itemize}
+	\item \textbf{\texttt{vl\_mser}} is used for feature extraction
+    \item \textbf{\texttt{knnsearch}} is used for feature matching in both images
+\end{itemize}
+\end{frame}
+
+
+\end{document}
