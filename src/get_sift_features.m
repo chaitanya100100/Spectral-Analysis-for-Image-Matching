@@ -3,31 +3,21 @@ function [f, d, M, N] = get_sift_features(im_path, max_pixels, step, bin_size)
 % There will be almost `max_pixels/(step*step)` feature points for small bin_size.
 % Extract image SIFT features using vlfeat.
 
-%{
-max_pixels = 48000 ;
-step = 6 ;
-bin_size = 6 ;
-%}
-
 bin_size = bin_size(1) ;
 
-im_raw = rgb2gray(imread(im_path)) ;
-[M, N] = size(im_raw) ;
-fprintf('image original size : [%d, %d]\n', M, N) ;
+im = im2double(imread(im_path)) ;
+if size(im, 3) == 3
+    im = rgb2gray(im) ;
+end
 
-im_raw_resized = imresize(im_raw, sqrt(max_pixels / (M*N)) ) ;
-[M, N] = size(im_raw_resized) ;
-fprintf('image resized size : [%d, %d]\n', M, N) ;
-
-im = single(im_raw_resized) ;
+[M, N] = size(im) ;
+im = imresize(im, sqrt(max_pixels / (M*N)) ) ;
+im = im2single(im) ;
+[M, N] = size(im) ;
 
 % vl_dsift() does NOT compute a Gaussian scale space of the image I. 
 % Instead, the image should be pre-smoothed at the desired scale level, e.b. by using the vl_imsmooth() function. 
 
 [f, d] = vl_dsift(im, 'size', bin_size, 'step', step, 'verbose') ;
-% [f1, d1] = vl_dsift(im, 'size', bin_size(1), 'step', step) ;
-% [f2, d2] = vl_dsift(im, 'size', bin_size(2), 'step', step) ;
-
-fprintf('total number of features : %d\n', size(d, 2)) ;
 
 end

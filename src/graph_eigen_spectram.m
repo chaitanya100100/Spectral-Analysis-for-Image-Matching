@@ -13,6 +13,8 @@ L = D*L*D ;
 %}
 
 % laplacian using formula L = I - XAX where X = D^(-1/2)
+
+%{
 D = sum(A) ;
 D = diag(1./sqrt(D)) ;
 L = eye(size(D, 1)) - D*A*D ;
@@ -21,5 +23,13 @@ L = eye(size(D, 1)) - D*A*D ;
 [V, E] = eigs(L, num, 'sm') ;
 %[V, E] = eig(L) ;
 V = D*V ;
+%}
+
+
+D = diag(sum(A)) ;
+D = D^(-1/2) ;
+L = eye(size(D, 1)) - D*A*D ;
+[V, E] = eigs(L, num) ;
+
 
 end

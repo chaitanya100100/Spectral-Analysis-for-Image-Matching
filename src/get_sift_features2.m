@@ -2,27 +2,20 @@ function [f, d, M, N] = get_sift_features2(im_path, max_pixels, step, bin_size)
 % Resize image so that total number of feature points doesn't exceed much.
 % There will be almost `max_pixels/(step*step)` feature points for small bin_size.
 % Extract image SIFT features using vlfeat.
+im = imread(im_path) ;
+if size(im, 3) == 3
+    im = rgb2gray(im) ;
+end
 
-%{
-max_pixels = 48000 ;
-step = 6 ;
-bin_size = 6 ;
-%}
-
-im_raw = rgb2gray(imread(im_path)) ;
-[M, N] = size(im_raw) ;
-fprintf('image original size : [%d, %d]\n', M, N) ;
-
-im_raw_resized = imresize(im_raw, sqrt(max_pixels / (M*N)) ) ;
-[M, N] = size(im_raw_resized) ;
-fprintf('image resized size : [%d, %d]\n', M, N) ;
-
-im = single(im_raw_resized) ;
+[M, N] = size(im) ;
+im = imresize(double(im), sqrt(max_pixels / (M*N)) ) ;
+im = im2single(im) ;
+[M, N] = size(im) ;
 
 % frames to compute sift features
 [p, q] = meshgrid(1:step:N, 1:step:M) ;
 f = [p(:) q(:)]' ;
-f(3, :) = 2 ;
+f(3, :) = 3 ;
 f(4, :) = 0 ;
 
 % sift at two bin_sizes
