@@ -1,7 +1,9 @@
+% This script combines, in a single script, all tasks done by main.m, 
+% adjacency_mat.m, get_sift_features.m, graph_eigen_spectram.m,
+% reconstruction.m.
+
 clear 
 close all;
-
-%run('../../vlfeat-0.9.20/toolbox/vl_setup.m');
 
 im1 = imread('../dataset/01.png');
 im2 = imread('../dataset/02.png');

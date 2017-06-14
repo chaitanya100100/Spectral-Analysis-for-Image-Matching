@@ -1,5 +1,11 @@
 function js = jspec(f, I) 
-    
+% Input is eigen function image and detected mser ellipses.
+% Output is sift feature calculated at each ellipses, concatenated with
+% ellipse parameters which is combinely called jspec.
+
+% Since this is not the part of the main learning aim of this project, this
+% function is implemented naively.
+
     mul = 4 ;
     [M, N] = size(I) ;
     js = zeros(size(f, 2), 128) ;

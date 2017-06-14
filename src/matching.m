@@ -1,3 +1,7 @@
+% This script loads mat file which has eigen functions of an image pair. It
+% then extract mser features, computes jspec features and then runs knn
+% search with some constraints for matching i.e. bidirectional matching.
+
 clear all ;
 load('montreal.mat') ;
 

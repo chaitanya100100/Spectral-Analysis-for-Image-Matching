@@ -1,7 +1,10 @@
-% run('/home/chaitanya/CVIT/2017-05-23_summer/vlfeat/vlfeat-0.9.20/toolbox/vl_setup.m')
-clear all ;
+%run('/home/chaitanya/CVIT/2017-05-23_summer/vlfeat/vlfeat-0.9.20/toolbox/vl_setup.m')
 
-fold = 'montreal' ;
+function main(fold)
+% this function generates eigen functions for image pair and save it to a
+% mat file. To visualize it, run 'see_matching.m' script.
+
+%fold = 'montreal' ;
 
 path1 = strcat('../dataset/', fold, '/01.png') ;
 path2 = strcat('../dataset/', fold, '/02.png') ;
@@ -95,3 +98,4 @@ fr2(4, :) = 0 ;
 [nn12, dist12] = knnsearch(sd2', sd1', 'K', 2) ;
 [nn21, dist21] = knnsearch(sd1', sd2', 'K', 2) ;
 %}
+end
