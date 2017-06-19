@@ -20,5 +20,5 @@ R = reshape(f(2, :), [r c]) ;
 ER = reshape(E, [r c]) ;
 [NC, NR] = meshgrid(1:n, 1:m) ;
 
-I = interp2(C, R, ER, NC, NR, 'linear', 0) ;
+I = interp2(C, R, abs(ER), NC, NR, 'linear', 0) ;
 end

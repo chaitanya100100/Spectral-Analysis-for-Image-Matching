@@ -1,6 +1,6 @@
 %run('/home/chaitanya/CVIT/2017-05-23_summer/vlfeat/vlfeat-0.9.20/toolbox/vl_setup.m')
 
-function main(fold)
+function [IS1, IS2] = main(fold)
 % this function generates eigen functions for image pair and save it to a
 % mat file. To visualize it, run 'see_matching.m' script.
 
@@ -9,7 +9,7 @@ function main(fold)
 path1 = strcat('../dataset/', fold, '/01.png') ;
 path2 = strcat('../dataset/', fold, '/02.png') ;
 
-max_pixels = 48000 ;
+max_pixels = 96000 ;
 step = 4 ;
 bin_size = [10 6] ;
 num = 6 ;
@@ -21,9 +21,9 @@ Delta = 10 ;
 
 % extract dense sift features from both images
 fprintf('dense sift features for %s\n', path1) ;
-[f1, d1, m1, n1] = get_sift_features(path1, max_pixels, step, bin_size) ;
+[f1, d1, m1, n1] = get_sift_features_128D(path1, max_pixels, step, bin_size) ;
 fprintf('dense sift features for %s\n', path2) ;
-[f2, d2, m2, n2] = get_sift_features(path2, max_pixels, step, bin_size) ;
+[f2, d2, m2, n2] = get_sift_features_128D(path2, max_pixels, step, bin_size) ;
 
 % number of feature points of image1 and image2 is nf1 and nf2 respectively
 nf1 = size(d1, 2) ;
