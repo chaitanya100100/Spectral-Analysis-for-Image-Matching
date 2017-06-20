@@ -355,6 +355,7 @@ switch class(points)
     ptsObj   = SURFPoints(location,'Scale',scale);    
   otherwise  % convert raw [X,Y] coordinates to SURFPoints
     ptsObj = SURFPoints(points);
+    ptsObj.Scale = 3*ptsObj.Scale;
 end
 
 % convert SURFPoints object back to structure required by
