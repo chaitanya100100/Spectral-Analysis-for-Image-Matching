@@ -15,3 +15,9 @@ Implementation of Joint Spectral Correspondence for matching the images with dis
 	- Implementation details of this project : ![implementation.pdf](reports/implementation.pdf)
 	- Generated eigen functions for some image pairs of dataset : ![eigen.pdf](reports/eigen.pdf)
 	- Results after matching eigen functions of some image pairs : ![matching.pdf](reports/matching.pdf)
+
+## Results
+![results/00/trevi02.jpg](trevi02)  
+![results/00/stargarder.jpg](stargarder)  
+![results/00/vatican.jpg](vatican)  
+![results/00/bdom.jpg](bdom)
