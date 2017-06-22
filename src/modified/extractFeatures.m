@@ -651,6 +651,7 @@ else
     majorAxes  = points.Axes(:,1);
     minorAxes  = points.Axes(:,2);
     % Make the scale proportional to the ellipse area.
+    % scale      = 1/8*sqrt(majorAxes.*minorAxes);
     scale      = 5/8*sqrt(majorAxes.*minorAxes);
     scale((scale < minScale)) = single(minScale);
 end

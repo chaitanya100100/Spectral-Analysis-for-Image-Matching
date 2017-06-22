@@ -1,4 +1,8 @@
 function index = threshMSER(mserf,euclid_thresh)
+% This function filters mser regions such that there are least overlapping
+% regions. It takes mser regions array as input and returns the indices of
+% filtered regions.
+
     %{
     clear all ;
     load('mser.mat') ;

@@ -1,4 +1,4 @@
-% this script run `main` for entire dataset.
+% this script runs `main` for entire dataset.
 
 li = dir('../dataset') ;
 li = li(3:size(li)) ;

@@ -5,7 +5,7 @@
 clear all;
 
 fold = 'madrid' ;
-load(strcat('../results/', fold, '/', fold,'.mat')) ;
+load(strcat('../../results/', fold, '/', fold,'.mat')) ;
 
 MinDiversity = 0.9 ;
 MaxVariation = 0.5 ;

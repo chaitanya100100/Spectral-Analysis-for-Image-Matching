@@ -1,3 +1,15 @@
+% This script first loads a mat file which has eigen function computed for an
+% image pair and then extract mser features from each of them. Then it
+% matches extracted features and show matched features. 
+
+% It uses inbuilt extractFeature and `match_features.m` file for matching.
+
+
+% For matching, area bigger than mser region is required to consider. To
+% do it in easier way, inbuilt 'extractFeature.m' is modified slightly on
+% line no. 654. This modified file is kept in src/modified directory and it
+% is added to matlab path while executing this script.
+
 clear all ;
 
 fold = 'stargarder' ;

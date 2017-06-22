@@ -1,4 +1,6 @@
 function [r, f, I] = mser(I, MinDiversity, MaxVariation, Delta)
+% This function returns mser regions calculated by vl_mser function after
+% normalizing the image.
 
 mi = min(I(:)) ;
 ma = max(I(:)) ;

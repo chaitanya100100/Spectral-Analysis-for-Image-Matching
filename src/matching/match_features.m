@@ -1,4 +1,12 @@
 function features = match_features(mserf1,mserf2,surff1,surff2)
+% this function match surf features calculated at mser regions. For
+% matching any feature, it calculates euclidian distance from nearest and
+% second nearest neighbour for both mser feature location and surf feature
+% vector. It accepts as a valid match depending upong ratio between first
+% and second nearest neighbour.
+
+% it returns pairs of indices of matched features
+
     thresh_euclid=3;
     mserthresh = 0.6;
     surfthresh = 0.6;
